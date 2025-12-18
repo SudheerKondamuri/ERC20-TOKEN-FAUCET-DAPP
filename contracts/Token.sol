@@ -1,18 +1,25 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-import "@openzeppelin/contracts/tokem/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Token is ERC20{
+contract Token is ERC20 {
     uint256 public constant TOTAL_SUPPLY = 1_000_000 * (10 ** 18);
     address public minter;
-    constructor(address faucetAddress) ERC20("Token", "TKN") {
-         require(faucetAddress != address(0), "Invalid faucet address");
-        minter = faucetAddress;
+    address public owner;
+
+    constructor(address _owner) ERC20("Token", "TKN") Ownable(msg.sender) {
+        minter = msg.sender;
     }
-    function mint(address to , uint256 amount)  external {
+
+    function mint(address to, uint256 amount) external {
         require(msg.sender == minter, "Only minter can mint");
         require(totalSupply() + amount <= TOTAL_SUPPLY, "Exceeds total supply");
-        _mint(to, amount);  
-        
+        _mint(to, amount);
+    }
+
+    function setMinter(address _newMinter) external {
+        require(msg.sender == owner, "Only owner");
+        minter = _newMinter;
     }
 }
