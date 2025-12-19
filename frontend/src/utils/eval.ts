@@ -23,7 +23,8 @@ window.__EVAL__ = {
   },
 
   getBalance: async (address: string): Promise<string> => {
-    return await getBalance(address);
+    const bal = await getBalance(address);
+    return bal.toString();
   },
 
   canClaim: async (address: string): Promise<boolean> => {
