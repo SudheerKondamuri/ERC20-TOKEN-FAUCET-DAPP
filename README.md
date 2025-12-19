@@ -1,66 +1,38 @@
-## Foundry
+# ERC-20 Token Faucet DApp (Sepolia)
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Project Overview
+A full-stack decentralized application allowing users to claim test ERC-20 tokens (TKN) with on-chain rate limiting (24h cooldown) and lifetime limits (100 TKN).
 
-Foundry consists of:
+## Deployed Contracts (Sepolia)
+- **Token Contract**: `0x...` ([Etherscan Link](https://sepolia.etherscan.io/address/0xFAf8bcC12213F555a114c24270A880b7652Df047))
+- **Faucet Contract**: `0x...` ([Etherscan Link](https://sepolia.etherscan.io/address/0x9b90453117e621453658329D14B46d88a62A6f16))
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Architecture
+![Architecture Diagram](./docs/architecture.png)
+*Explain the flow: User interacts with React, which uses Ethers.js to talk to Sepolia contracts via MetaMask.*
 
-## Documentation
+## Quick Start
+1. `cp .env.example .env` (Add your RPC and Contract Addresses)
+2. `docker compose up --build`
+3. Access at `http://localhost:3000`
+4. Health check at `http://localhost:3000/health`
 
-https://book.getfoundry.sh/
+## Design Decisions
+- **Faucet Amount**: 1 TKN ($10^{18}$ base units) per request.
+- **Cooldown**: 24 hours (86,400 seconds) to prevent spamming.
+- **Supply**: Fixed 1,000,000 TKN max supply to ensure scarcity.
 
-## Usage
+## Video Demo
+[Link to Video (Loom/YouTube)]
 
-### Build
+## Screenshots
+### Wallet Connected
+![Wallet](./screenshots/wallet.png)
+### Successful Claim
+![Success](./screenshots/success.png)
+### Cooldown Error
+![Error](./screenshots/error.png)
 
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+## Security & Optimization
+- **Access Control**: Used OpenZeppelin's `Ownable` for `setMinter` and admin-only `setPaused`.
+- **Checks-Effects-Interactions**: State is updated before calling `token.mint` to prevent reentrancy.
