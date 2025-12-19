@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_RPC_URL=${VITE_RPC_URL}
+      - VITE_TOKEN_ADDRESS=${VITE_TOKEN_ADDRESS}
+      - VITE_FAUCET_ADDRESS=${VITE_FAUCET_ADDRESS}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
