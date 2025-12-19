@@ -1,5 +1,6 @@
 // src/utils/contracts.ts
 import { ethers } from "ethers";
+import { ensureSepolia } from "./wallet";
 import TokenABI from "../../abis/Token.json";
 import FaucetABI from "../../abis/TokenFaucet.json";
 
@@ -34,7 +35,7 @@ export function getFaucetContract(
 export async function getBalance(address: string): Promise<string> {
   const token = getTokenContract(getProvider());
   const bal = await token.balanceOf(address);
-  return bal.toString();
+  return ethers.formatEther(bal);
 }
 
 export async function canClaim(address: string): Promise<boolean> {
@@ -45,10 +46,11 @@ export async function canClaim(address: string): Promise<boolean> {
 export async function getRemainingAllowance(address: string): Promise<string> {
   const faucet = getFaucetContract(getProvider());
   const remaining = await faucet.remainingAllowance(address);
-  return remaining.toString();
+  return ethers.formatEther(remaining);
 }
 
 export async function requestTokens(): Promise<string> {
+    await ensureSepolia();
   const signer = await getSigner();
   const faucet = getFaucetContract(signer);
   const tx = await faucet.requestTokens();
