@@ -1,9 +1,8 @@
-// src/utils/eval.ts
-import {
-  getBalance,
-  canClaim,
-  getRemainingAllowance,
-  requestTokens,
+import { 
+  getProvider, 
+  getTokenContract, 
+  getFaucetContract, 
+  requestTokens 
 } from "./contracts";
 import { connectWallet } from "./wallet";
 
@@ -19,20 +18,27 @@ window.__EVAL__ = {
   },
 
   requestTokens: async (): Promise<string> => {
-    return await requestTokens();
+    return await requestTokens(); 
   },
 
   getBalance: async (address: string): Promise<string> => {
-    const bal = await getBalance(address);
-    return bal.toString();
+    const provider = getProvider();
+    const token = getTokenContract(provider);
+    const bal = await token.balanceOf(address);
+    return bal.toString(); 
   },
 
   canClaim: async (address: string): Promise<boolean> => {
-    return await canClaim(address);
+    const provider = getProvider();
+    const faucet = getFaucetContract(provider);
+    return await faucet.canClaim(address);
   },
 
   getRemainingAllowance: async (address: string): Promise<string> => {
-    return await getRemainingAllowance(address);
+    const provider = getProvider();
+    const faucet = getFaucetContract(provider);
+    const remaining = await faucet.remainingAllowance(address);
+    return remaining.toString(); // Returns "100000000000000000000" (Base Units)
   },
 
   getContractAddresses: async () => {
