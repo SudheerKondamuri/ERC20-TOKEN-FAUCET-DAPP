@@ -1,0 +1,5 @@
+{
+  "projects": {
+    "default": "erc20-faucet-dapp"
+  }
+}
