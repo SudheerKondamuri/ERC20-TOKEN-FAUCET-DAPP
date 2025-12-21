@@ -3,9 +3,13 @@
 ## Project Overview
 A full-stack decentralized application allowing users to claim test ERC-20 tokens (TKN) with on-chain rate limiting (24h cooldown) and lifetime limits (100 TKN).
 
+## Live Demo
+- **Live Video Url**: ([Live Video url](https://drive.google.com/file/d/1fJ3W2S6YW-O10uo9wHCLnLfiHLHtoqY8/view?usp=sharing))
+- **Live Demo Url**: ([Live demo url](https://erc20-faucet-dapp.web.app/))
+
 ## Deployed Contracts (Sepolia)
-- **Token Contract**: `0x...` ([Etherscan Link](https://sepolia.etherscan.io/address/0xFAf8bcC12213F555a114c24270A880b7652Df047))
-- **Faucet Contract**: `0x...` ([Etherscan Link](https://sepolia.etherscan.io/address/0x9b90453117e621453658329D14B46d88a62A6f16))
+- **Token Contract**: `0xFAf8bcC12213F555a114c24270A880b7652Df047` ([Etherscan Link](https://sepolia.etherscan.io/address/0xFAf8bcC12213F555a114c24270A880b7652Df047))
+- **Faucet Contract**: `0x9b90453117e621453658329D14B46d88a62A6f16` ([Etherscan Link](https://sepolia.etherscan.io/address/0x9b90453117e621453658329D14B46d88a62A6f16))
 
 ## Architecture
 ![Architecture Diagram](./docs/architecture.png)
@@ -26,12 +30,14 @@ A full-stack decentralized application allowing users to claim test ERC-20 token
 [Link to Video (Loom/YouTube)]
 
 ## Screenshots
+### Wallet Connection Request
+![Wallet Connection](./screenshots/walletconnecion.png)
 ### Wallet Connected
 ![Wallet](./screenshots/wallet.png)
 ### Successful Claim
 ![Success](./screenshots/success.png)
-### Cooldown Error
-![Error](./screenshots/error.png)
+
+
 
 ## Security & Optimization
 - **Access Control**: Used OpenZeppelin's `Ownable` for `setMinter` and admin-only `setPaused`.
