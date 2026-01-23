@@ -8,11 +8,12 @@ import { connectWallet } from "./wallet";
 
 declare global {
   interface Window {
-    __EVAL__: any;
+    EVAL: any; // Changed from __EVAL__ to EVAL
   }
 }
 
-window.__EVAL__ = {
+// Changed from window.__EVAL__ to window.EVAL
+window.EVAL = {
   connectWallet: async (): Promise<string> => {
     return await connectWallet();
   },
@@ -38,7 +39,7 @@ window.__EVAL__ = {
     const provider = getProvider();
     const faucet = getFaucetContract(provider);
     const remaining = await faucet.remainingAllowance(address);
-    return remaining.toString(); // Returns "100000000000000000000" (Base Units)
+    return remaining.toString();
   },
 
   getContractAddresses: async () => {
