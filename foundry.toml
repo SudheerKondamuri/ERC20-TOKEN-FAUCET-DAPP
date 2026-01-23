@@ -1,5 +1,5 @@
 [profile.default]
-src = "src"
+src = "contracts"  # Changed from "src" to "contracts"
 out = "out"
 libs = ["lib"]
 
